@@ -7,8 +7,28 @@ class Student:
         self.courses_in_progress = []
         self.grades = {}
 
-    # def grading(self, name):
-    #     if isinstance
+    def average_rating(self):
+        count = 0
+        number_of_ratings = []
+        for key in self.grades:
+            for evaluations in self.grades[key]:
+                count += evaluations
+                number_of_ratings.append(evaluations)
+        return count / len(number_of_ratings)
+
+    def grading(self, lecturer, course, grade):
+        if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached:
+            if course in lecturer.courses_attached:
+                lecturer.courses_attached[course] += [grade]
+            else:
+                lecturer.courses_attached[course] = [grade]
+        else:
+            return 'Ошибка'
+
+    def __str__(self):
+        some_student = f'Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания: {self.average_rating()}' \
+                       f'\nКурсы в процессе изучения: {",".join(self.courses_in_progress)}\nЗавершенные курсы: {",".join(self.finished_courses)}'
+        return(some_student)
 
 
 class Mentor:
@@ -19,7 +39,23 @@ class Mentor:
 
 
 class Lecturer(Mentor):
-    received_score = {}
+
+    def __init__(self, name, surname):
+        super().__init__(name, surname)
+        self.received_estimates = {}
+
+    def average_rating(self):
+        count = 0
+        number_of_ratings = []
+        for key in self.received_estimates:
+            for evaluations in self.received_estimates[key]:
+                count += evaluations
+                number_of_ratings.append(evaluations)
+        return count / len(number_of_ratings)
+
+    def __str__(self):
+        some_student = f'Имя: {self.name}\nФамилия: {self.surname}\n{self.average_rating()} '
+        return some_student
 
 
 class Reviewer(Mentor):
@@ -32,15 +68,35 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
+    def __str__(self):
+        some_student = f'Имя: {self.name}\nФамилия: {self.surname}'
+        return some_student
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
 
-cool_mentor = Mentor('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
+student1 = Student('Max', 'Petrov', 'M')
+student1.courses_in_progress += ['Payton']
 
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
+cool_mentor = Reviewer('Petr', 'Sidorov')
+cool_mentor.courses_attached += ['Payton']
 
-print(best_student.grades)
+cool_mentor.rate_hw (student1, 'Payton', 4)
+cool_mentor.rate_hw (student1, 'Payton', 7)
+
+lecturer1 = Lecturer('Serge', 'Petrov')
+lecturer1.courses_attached += ['Payton']
+
+student1.grading(lecturer1, 'Payton', 7)
+
+
+
+print (student1)
+print()
+print(cool_mentor)
+print()
+print(lecturer1)
+
+
+
+
+
+
