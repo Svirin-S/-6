@@ -151,7 +151,8 @@ def best(dictionary):
 def a(b):
     count = {}
     i = {}
-    y = []
+
+
     for m in b:
 
         for l in list(m.items()):
@@ -170,15 +171,19 @@ def a(b):
 
                 else:
                     count[l[0]] = k
+    y = list(count.values())
+    p = []
 
-    for g in i.values():
+    for d in i.values():
+        p.append(len(d))
+    res = [q / u for q, u in zip(y, p)]
+    print(res)
 
 
-        for o in count.values():
 
-            print(o / len(g))
 
-    # print(y)
+
+
     # print(list(count.values()))
     # for t in count.items():
     #
